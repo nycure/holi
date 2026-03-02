@@ -27,7 +27,10 @@ body {
         radial-gradient(circle at 20% 40%, rgba(255, 42, 117, 0.18), transparent 60%),
         radial-gradient(circle at 80% 60%, rgba(138, 43, 226, 0.15), transparent 60%),
         radial-gradient(circle at 50% 90%, rgba(255, 223, 0, 0.08), transparent 50%);
-    overflow: hidden;
+    overflow-x: hidden;
+    /* Prevent horizontal scroll only */
+    overflow-y: auto;
+    /* Allow scrolling down for the photo */
     color: var(--text-color);
     position: relative;
 }
@@ -92,6 +95,8 @@ body {
     align-items: center;
     position: relative;
     z-index: 2;
+    padding: 20px 0;
+    /* Add padding so it doesn't touch edges when scrolling */
 }
 
 .container {
