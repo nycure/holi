@@ -198,11 +198,15 @@ body {
     opacity: 0;
     transform: translateZ(35px) scale(0.8);
     transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    display: flex;
+    justify-content: center;
 }
 
 .photo-container.visible {
-    height: 250px;
-    /* Adjust based on photo aspect ratio */
+    /* Use a relative max height to avoid being too small on short screens */
+    height: 35vh;
+    max-height: 350px;
+    min-height: 200px;
     opacity: 1;
     transform: translateZ(35px) scale(1);
 }
@@ -210,12 +214,13 @@ body {
 .romantic-photo {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    border-radius: 20px;
-    border: 3px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 15px 35px rgba(255, 42, 117, 0.4);
+    /* Changing cover to contain ensures the whole photo is always visible */
+    object-fit: contain;
+    border-radius: 12px;
+    /* Move border/shadow to a wrapper if we want it tight to the image, 
+       otherwise it's around the flexible container */
     pointer-events: auto;
-    /* Allow hovering the image */
+    filter: drop-shadow(0 10px 20px rgba(255, 42, 117, 0.3));
 }
 
 .actions {
@@ -275,19 +280,37 @@ body {
 
 /* Media Query for mobile */
 @media (max-width: 480px) {
-    .title {
-        font-size: 4.5rem;
+    .glass {
+        padding: 30px 15px;
+        /* Less horizontal padding to fit larger text */
     }
 
-    .glass {
-        padding: 40px 20px;
+    .title {
+        font-size: min(15vw, 4.5rem);
+        /* Prevents overflow on very narrow phones */
+        line-height: 1.1;
+        margin-bottom: -5px;
     }
 
     .subtitle {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .message {
+        font-size: 1rem;
+        margin-bottom: 25px;
     }
 
     .photo-container.visible {
-        height: 200px;
+        height: 30vh;
+        /* slightly smaller on mobile to leave room for buttons */
+        min-height: 180px;
+    }
+
+    .primary-btn {
+        padding: 15px 30px;
+        font-size: 1.1rem;
     }
 }
