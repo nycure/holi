@@ -1,47 +1,208 @@
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
 :root {
-    --primary-glow: #ff2a75;
-    /* Deeper romantic pink/red */
-    --secondary-glow: #ffdf00;
-    /* Warm gold */
+    --primary: #ff2a75;
+    --secondary: #ffdf00;
+    --purple: #8a2be2;
     --glass-bg: rgba(255, 192, 203, 0.05);
-    /* Soft pink tint */
     --glass-border: rgba(255, 255, 255, 0.15);
-    --glass-highlight: rgba(255, 255, 255, 0.25);
-    --text-color: #ffffff;
+    --glass-highlight: rgba(255, 255, 255, 0.22);
+    --text: #ffffff;
     --bg-dark: #1a0b12;
-    /* Twilight romantic dark */
 }
 
-* {
+/* ============================================================
+   BASE RESET
+   ============================================================ */
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Outfit', sans-serif;
 }
 
+/* ============================================================
+   BODY — ANIMATED AURORA BACKGROUND
+   ============================================================ */
 body {
     min-height: 100vh;
     background-color: var(--bg-dark);
-    /* Romantic Twilight Background */
     background-image:
-        radial-gradient(circle at 20% 40%, rgba(255, 42, 117, 0.18), transparent 60%),
-        radial-gradient(circle at 80% 60%, rgba(138, 43, 226, 0.15), transparent 60%),
-        radial-gradient(circle at 50% 90%, rgba(255, 223, 0, 0.08), transparent 50%);
+        radial-gradient(circle at 20% 40%, rgba(255, 42, 117, 0.2), transparent 60%),
+        radial-gradient(circle at 80% 60%, rgba(138, 43, 226, 0.18), transparent 60%),
+        radial-gradient(circle at 50% 90%, rgba(255, 223, 0, 0.10), transparent 50%);
     overflow-x: hidden;
-    /* Prevent horizontal scroll only */
     overflow-y: auto;
-    /* Allow scrolling down for the photo */
-    color: var(--text-color);
+    color: var(--text);
     position: relative;
+    animation: auroraShift 12s ease-in-out infinite alternate;
 }
 
-/* Floating Magical Elements */
-.petals-container {
+@keyframes auroraShift {
+    0% {
+        background-position: 0% 0%, 100% 100%, 50% 100%;
+        filter: hue-rotate(0deg);
+    }
+
+    50% {
+        background-position: 10% 5%, 90% 95%, 55% 95%;
+        filter: hue-rotate(15deg);
+    }
+
+    100% {
+        background-position: 5% 10%, 95% 90%, 45% 100%;
+        filter: hue-rotate(-10deg);
+    }
+}
+
+/* ============================================================
+   SPARKLE STARS (pure CSS, no JS)
+   ============================================================ */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+        radial-gradient(1px 1px at 10% 15%, rgba(255, 255, 255, 0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 40%, rgba(255, 255, 255, 0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 20%, rgba(255, 255, 255, 0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 55%, rgba(255, 255, 255, 0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 85% 25%, rgba(255, 255, 255, 0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 75%, rgba(255, 255, 255, 0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 80%, rgba(255, 255, 255, 0.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 90% 70%, rgba(255, 255, 255, 0.6) 0%, transparent 100%);
+    animation: sparkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes sparkle {
+    0% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.5;
+    }
+}
+
+/* ============================================================
+   HOLI POWDER LOADING SPLASH
+   ============================================================ */
+#loadingSplash {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a0b12;
+    overflow: hidden;
+    animation: splashFadeOut 0.8s ease-out 2s forwards;
+}
+
+#loadingSplash .splash-ring {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    border-radius: 50%;
+    animation: explode 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+#loadingSplash .splash-ring:nth-child(1) {
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, #ff2a75, transparent 70%);
+    animation-delay: 0s;
+}
+
+#loadingSplash .splash-ring:nth-child(2) {
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, #ffdf00, transparent 70%);
+    animation-delay: 0.15s;
+}
+
+#loadingSplash .splash-ring:nth-child(3) {
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, #8a2be2, transparent 70%);
+    animation-delay: 0.3s;
+}
+
+#loadingSplash .splash-ring:nth-child(4) {
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, #00f0ff, transparent 70%);
+    animation-delay: 0.45s;
+}
+
+#loadingSplash .splash-ring:nth-child(5) {
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, #ff69b4, transparent 70%);
+    animation-delay: 0.6s;
+}
+
+#loadingSplash .splash-text {
+    position: relative;
+    z-index: 1;
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.5rem;
+    color: #fff;
+    text-shadow: 0 0 30px rgba(255, 42, 117, 0.9);
+    animation: textPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both;
+}
+
+@keyframes explode {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.9;
+    }
+
+    80% {
+        opacity: 0.6;
+    }
+
+    100% {
+        width: 200vmax;
+        height: 200vmax;
+        opacity: 0;
+    }
+}
+
+@keyframes textPop {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes splashFadeOut {
+    to {
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+    }
+}
+
+/* ============================================================
+   FLOATING PETALS
+   ============================================================ */
+.petals-container {
+    position: fixed;
+    inset: 0;
     overflow: hidden;
     pointer-events: none;
     z-index: 0;
@@ -49,22 +210,20 @@ body {
 
 .petal {
     position: absolute;
-    background: radial-gradient(circle, rgba(255, 182, 193, 0.8), rgba(255, 105, 180, 0.2));
     border-radius: 50% 0 50% 50%;
-    /* Petal shape */
-    box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
-    animation: drift 15s linear infinite;
+    box-shadow: 0 0 10px currentColor;
+    animation: drift 18s linear infinite;
     opacity: 0;
 }
 
 @keyframes drift {
     0% {
-        transform: translateY(-5vh) rotate(0deg) translateX(0);
+        transform: translateY(-8vh) rotate(0deg) translateX(0);
         opacity: 0;
     }
 
     10% {
-        opacity: 0.6;
+        opacity: 0.7;
     }
 
     90% {
@@ -72,93 +231,151 @@ body {
     }
 
     100% {
-        transform: translateY(105vh) rotate(360deg) translateX(100px);
+        transform: translateY(108vh) rotate(400deg) translateX(80px);
         opacity: 0;
     }
 }
 
-/* Interactive Canvas Layer */
+/* ============================================================
+   CANVAS PAINT TRAIL
+   ============================================================ */
 #paintCanvas {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: fixed;
+    inset: 0;
     width: 100%;
     height: 100%;
     z-index: 1;
     pointer-events: none;
 }
 
+/* ============================================================
+   APP LAYOUT
+   ============================================================ */
 #app {
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
     z-index: 2;
-    padding: 20px 0;
-    /* Add padding so it doesn't touch edges when scrolling */
+    padding: 40px 20px;
+    gap: 0;
 }
 
 .container {
     width: 100%;
-    max-width: 650px;
+    max-width: 660px;
     padding: 20px;
     perspective: 1200px;
 }
 
-/* Romantic Glass Letter Effect */
+/* ============================================================
+   GLASS CARD — ANIMATED BORDER
+   ============================================================ */
 .glass {
     position: relative;
     background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--glass-border);
     border-radius: 40px;
-    padding: 50px 40px;
+    padding: 55px 45px;
     text-align: center;
     box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.5),
+        0 25px 60px rgba(0, 0, 0, 0.55),
         inset 0 2px 0 var(--glass-highlight),
-        inset 0 0 30px rgba(255, 192, 203, 0.05);
-    /* Slight pink inner glow */
+        inset 0 0 40px rgba(255, 192, 203, 0.06);
     transform-style: preserve-3d;
     transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
+/* Animated glowing gradient border */
 .glass::before {
     content: '';
     position: absolute;
     inset: -2px;
     border-radius: 42px;
-    background: linear-gradient(45deg, #ff2a75, #ffb6c1, #8a2be2, #ffdf00);
+    background: linear-gradient(45deg, #ff2a75, #ffb6c1, #8a2be2, #ffdf00, #00f0ff, #ff2a75);
+    background-size: 300% 300%;
     z-index: -1;
-    opacity: 0.3;
-    filter: blur(20px);
-    transition: opacity 0.5s ease;
+    opacity: 0.45;
+    filter: blur(18px);
+    animation: borderFlow 6s ease infinite;
 }
 
-/* Typography Enhancements */
+@keyframes borderFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Inner card breathing glow */
+.glass::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 40px;
+    box-shadow: inset 0 0 60px rgba(255, 42, 117, 0.08);
+    animation: cardBreath 4s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes cardBreath {
+    from {
+        box-shadow: inset 0 0 40px rgba(255, 42, 117, 0.05);
+    }
+
+    to {
+        box-shadow: inset 0 0 80px rgba(255, 42, 117, 0.15);
+    }
+}
+
+/* ============================================================
+   ENTRANCE ANIMATIONS — staggered element reveal
+   ============================================================ */
+.glass-content-enter {
+    opacity: 0;
+    transform: translateY(20px) translateZ(0);
+    animation: slideUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0) translateZ(0);
+    }
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
 .title {
-    font-size: 5rem;
+    font-size: clamp(3.5rem, 10vw, 5.5rem);
     font-weight: 400;
-    margin-bottom: -15px;
-    /* Pull subtitle closer */
+    margin-bottom: -10px;
     letter-spacing: 2px;
     font-family: 'Great Vibes', cursive;
-    /* Flowing romantic font */
     color: #ffffff;
-    text-shadow: 0 5px 20px rgba(255, 42, 117, 0.6);
+    text-shadow: 0 5px 25px rgba(255, 42, 117, 0.7);
     transform: translateZ(40px);
-    /* Extrac 3D pop for title */
 }
 
 .romantic-name {
-    background: linear-gradient(to right, #ffb6c1, #ffdf00, #ff2a75);
-    background-size: 200% auto;
+    background: linear-gradient(to right, #ffb6c1, #ffdf00, #ff2a75, #ff69b4);
+    background-size: 300% auto;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: gradientFlow 5s ease infinite alternate;
+    animation: gradientFlow 4s ease infinite alternate;
     display: inline-block;
 }
 
@@ -172,106 +389,229 @@ body {
     }
 }
 
+/* Typewriter cursor */
+.typewriter-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background: rgba(255, 255, 255, 0.8);
+    margin-left: 3px;
+    vertical-align: middle;
+    animation: blink 0.75s step-end infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
 .subtitle {
-    font-size: 1.6rem;
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
     font-weight: 500;
-    margin-top: 25px;
-    margin-bottom: 25px;
-    line-height: 1.5;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    line-height: 1.6;
     color: rgba(255, 255, 255, 0.95);
     font-family: 'Playfair Display', serif;
-    /* Elegant serif for the message */
     font-style: italic;
     transform: translateZ(25px);
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    min-height: 3.5em;
+    /* Reserve space during typewriter */
 }
 
 .message {
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 40px;
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 35px;
     font-family: 'Outfit', sans-serif;
     transform: translateZ(15px);
+    letter-spacing: 0.3px;
 }
 
-/* Hidden Photo Container */
+/* ============================================================
+   PHOTO — POLAROID FRAME
+   ============================================================ */
 .photo-container {
     margin-top: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     height: 0;
     overflow: hidden;
     opacity: 0;
-    transform: translateZ(35px) scale(0.8);
+    transform: translateZ(35px) scale(0.85) rotate(-1.5deg);
     transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    display: flex;
-    justify-content: center;
 }
 
 .photo-container.visible {
-    /* Use a relative max height to avoid being too small on short screens */
-    height: 35vh;
-    max-height: 350px;
-    min-height: 200px;
+    height: auto;
+    max-height: 420px;
     opacity: 1;
-    transform: translateZ(35px) scale(1);
+    transform: translateZ(35px) scale(1) rotate(-1deg);
+}
+
+/* Polaroid wrapper */
+.polaroid {
+    display: inline-block;
+    background: #fff;
+    padding: 12px 12px 44px 12px;
+    border-radius: 6px;
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.5),
+        0 5px 15px rgba(255, 42, 117, 0.25);
+    transform: rotate(-1deg);
+    transition: transform 0.3s ease;
+    cursor: zoom-in;
+}
+
+.polaroid:hover {
+    transform: rotate(0deg) scale(1.03);
+    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.55), 0 5px 20px rgba(255, 42, 117, 0.4);
 }
 
 .romantic-photo {
     width: 100%;
-    height: 100%;
-    /* Changing cover to contain ensures the whole photo is always visible */
-    object-fit: contain;
-    border-radius: 12px;
-    /* Move border/shadow to a wrapper if we want it tight to the image, 
-       otherwise it's around the flexible container */
-    pointer-events: auto;
-    filter: drop-shadow(0 10px 20px rgba(255, 42, 117, 0.3));
+    max-width: 320px;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 3px;
+    display: block;
+    filter: contrast(1.05) saturate(1.1);
 }
 
+.polaroid-caption {
+    font-family: 'Great Vibes', cursive;
+    color: #c0392b;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 8px;
+    line-height: 1;
+}
+
+/* ============================================================
+   LIGHTBOX
+   ============================================================ */
+#lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    background: rgba(0, 0, 0, 0.88);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    cursor: zoom-out;
+    backdrop-filter: blur(8px);
+}
+
+#lightbox.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 20px 80px rgba(255, 42, 117, 0.4);
+    animation: lightboxPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes lightboxPop {
+    from {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ============================================================
+   BUTTON — HEARTBEAT PULSE + CYCLING STATES
+   ============================================================ */
 .actions {
     display: flex;
     justify-content: center;
     transform: translateZ(50px);
-    /* Button pops out the most */
 }
 
-/* Premium Romantic Button */
 .primary-btn {
     position: relative;
     background: transparent;
     color: white;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    padding: 18px 50px;
-    font-size: 1.3rem;
+    border: 1.5px solid rgba(255, 255, 255, 0.55);
+    padding: 18px 52px;
+    font-size: 1.25rem;
     font-weight: 500;
     border-radius: 50px;
     cursor: pointer;
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     backdrop-filter: blur(5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     font-family: 'Outfit', sans-serif;
     letter-spacing: 1px;
+    animation: heartbeat 1.8s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    14% {
+        transform: scale(1.06);
+        box-shadow: 0 15px 40px rgba(255, 42, 117, 0.4);
+    }
+
+    28% {
+        transform: scale(1);
+    }
+
+    42% {
+        transform: scale(1.04);
+        box-shadow: 0 12px 35px rgba(255, 42, 117, 0.3);
+    }
+
+    70% {
+        transform: scale(1);
+    }
 }
 
 .primary-btn::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #ff2a75, #ffb6c1);
-    /* Pink gradient */
+    inset: 0;
+    background: linear-gradient(135deg, #ff2a75, #ff69b4, #ffb6c1);
     z-index: -1;
     opacity: 0;
     transition: opacity 0.4s ease;
 }
 
+.primary-btn.revealed {
+    animation: none;
+    /* stop heartbeat once revealed */
+}
+
 .primary-btn:hover {
     border-color: transparent;
     transform: scale(1.08) translateY(-3px);
-    box-shadow: 0 15px 40px rgba(255, 42, 117, 0.5);
+    box-shadow: 0 18px 45px rgba(255, 42, 117, 0.55);
     letter-spacing: 2px;
 }
 
@@ -283,39 +623,114 @@ body {
     transform: scale(0.95);
 }
 
-/* Media Query for mobile */
-@media (max-width: 480px) {
-    .glass {
-        padding: 30px 15px;
-        /* Less horizontal padding to fit larger text */
+/* ============================================================
+   MUSIC TOGGLE
+   ============================================================ */
+#musicToggle {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 500;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 42, 117, 0.15);
+    backdrop-filter: blur(12px);
+    color: white;
+    font-size: 1.4rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    animation: musicFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes musicFloat {
+    from {
+        transform: translateY(0);
     }
 
-    .title {
-        font-size: min(15vw, 4.5rem);
-        /* Prevents overflow on very narrow phones */
-        line-height: 1.1;
-        margin-bottom: -5px;
+    to {
+        transform: translateY(-6px);
+    }
+}
+
+#musicToggle:hover {
+    background: rgba(255, 42, 117, 0.35);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: scale(1.12);
+}
+
+#musicToggle.playing {
+    animation: musicFloat 3s ease-in-out infinite alternate, musicPulse 1s ease-in-out infinite;
+}
+
+@keyframes musicPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 42, 117, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 0 0 12px rgba(255, 42, 117, 0);
+    }
+}
+
+/* ============================================================
+   ACCESSIBILITY: prefers-reduced-motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 480px) {
+    .glass {
+        padding: 30px 18px;
     }
 
     .subtitle {
-        font-size: 1.2rem;
-        margin-top: 15px;
+        font-size: 1.15rem;
+        margin-top: 18px;
         margin-bottom: 15px;
     }
 
     .message {
-        font-size: 1rem;
+        font-size: 0.95rem;
         margin-bottom: 25px;
     }
 
     .photo-container.visible {
-        height: 30vh;
-        /* slightly smaller on mobile to leave room for buttons */
-        min-height: 180px;
+        max-height: 320px;
+    }
+
+    .romantic-photo {
+        max-width: 240px;
+        max-height: 220px;
     }
 
     .primary-btn {
-        padding: 15px 30px;
+        padding: 15px 32px;
         font-size: 1.1rem;
+    }
+
+    #musicToggle {
+        width: 44px;
+        height: 44px;
+        font-size: 1.2rem;
+        bottom: 16px;
+        right: 16px;
     }
 }
