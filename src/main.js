@@ -209,9 +209,8 @@ const setupApp = () => {
 
     window.addEventListener('mousemove', e => handleInteraction(e.clientX, e.clientY));
     window.addEventListener('touchmove', e => {
-        e.preventDefault();
         if (e.touches.length > 0) handleInteraction(e.touches[0].clientX, e.touches[0].clientY);
-    }, { passive: false });
+    }, { passive: true });
 
     const animateParticles = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
