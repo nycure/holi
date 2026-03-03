@@ -114,7 +114,10 @@ const setupApp = () => {
             '50% 0 50% 0',    // diamond-ish
         ];
 
-        for (let i = 0; i < 28; i++) {
+        const isMobile = window.innerWidth <= 768;
+        const petalCount = isMobile ? 12 : 28;
+
+        for (let i = 0; i < petalCount; i++) {
             const petal = document.createElement('div');
             petal.classList.add('petal');
             const size = Math.random() * 14 + 8;

@@ -38,23 +38,23 @@ body {
     overflow-y: auto;
     color: var(--text);
     position: relative;
-    animation: auroraShift 12s ease-in-out infinite alternate;
+    /* Aurora: only animate opacity — never filter/transform on body (causes full repaint) */
+    animation: auroraShift 10s ease-in-out infinite alternate;
 }
 
 @keyframes auroraShift {
+
+    /* No filter — animating filter on body triggers full-page repaint every frame */
     0% {
-        background-position: 0% 0%, 100% 100%, 50% 100%;
-        filter: hue-rotate(0deg);
+        opacity: 0.92;
     }
 
     50% {
-        background-position: 10% 5%, 90% 95%, 55% 95%;
-        filter: hue-rotate(15deg);
+        opacity: 1;
     }
 
     100% {
-        background-position: 5% 10%, 95% 90%, 45% 100%;
-        filter: hue-rotate(-10deg);
+        opacity: 0.95;
     }
 }
 
@@ -211,9 +211,11 @@ body::after {
 .petal {
     position: absolute;
     border-radius: 50% 0 50% 50%;
-    box-shadow: 0 0 10px currentColor;
+    box-shadow: 0 0 8px currentColor;
     animation: drift 18s linear infinite;
     opacity: 0;
+    will-change: transform;
+    /* promote to own GPU layer */
 }
 
 @keyframes drift {
@@ -276,8 +278,8 @@ body::after {
 .glass {
     position: relative;
     background: var(--glass-bg);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--glass-border);
     border-radius: 40px;
     padding: 55px 45px;
@@ -699,6 +701,9 @@ body::after {
 @media (max-width: 480px) {
     .glass {
         padding: 30px 18px;
+        /* Lighter blur on mobile — heavy blur is a GPU drain */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
 
     .subtitle {
